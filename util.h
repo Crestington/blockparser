@@ -348,7 +348,7 @@
         );
     #endif
 
-    #if defined(PAYCON)
+    #if defined(PAYCON)|| defined(MOTACOIN)
         void h13(
                   uint8_t *h9r,
             const uint8_t *buf,

@@ -548,7 +548,7 @@ static int getCoinType() {
             48 + 28
         #endif
 
-        #if defined(PAYCON)
+        #if defined(PAYCON)|| defined(MOTACOIN)
             55
         #endif
 

@@ -175,13 +175,11 @@ struct AllBalances:public Callback {
         addrMap.resize(15 * 1000 * 1000);
         allAddrs.reserve(15 * 1000 * 1000);
 
-	optparse::Values &values = parser.parse_args(argc, argv);
-
-
-        cutoffBlock = values.get("atBlock").asInt64();
-        showAddr = values.get("withAddr").asInt64();
+        optparse::Values &values = parser.parse_args(argc, argv);
+        cutoffBlock = values.get("atBlock");
+        showAddr = values.get("withAddr");
         detailed = values.get("detailed");
-        limit = values.get("limit").asInt64();
+        limit = values.get("limit");
         csv = values.get("csv");
         interrupted = false;
         isDone = false;

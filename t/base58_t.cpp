@@ -129,12 +129,10 @@ static bool testHash2Addr(
 }
 
 static int h2addr() {
-    auto count = 0;
-    auto ok = true;
-    #define X(addr, hash) { ok = ok && testHash2Addr(addr, hash); ++count; }
+    bool ok = true;
+    #define X(addr, hash) ok = ok && testHash2Addr(addr, hash);
         EQUIV_LIST
     #undef X
-    Test::pushMsg("checked %d vectors", count);
     return ok ? 0 : 1;
 }
 
@@ -169,12 +167,10 @@ static bool testAddr2Hash(
 }
 
 static int addr2hash() {
-    auto count = 0;
     auto ok = true;
-    #define X(addr, hash) { ok = ok && testAddr2Hash((const uint8_t*)addr, (const uint8_t*)hash); ++count; }
+    #define X(addr, hash) ok = ok && testAddr2Hash((const uint8_t*)addr, (const uint8_t*)hash);
         EQUIV_LIST
     #undef X
-    Test::pushMsg("checked %d vectors", count);
     return ok ? 0 : 1;
 }
 

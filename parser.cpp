@@ -10,12 +10,10 @@
 #include <fcntl.h>
 #include <malloc.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
-#if !defined(S_ISDIR)
-    #define S_ISDIR(mode) (S_IFDIR==((mode) & S_IFMT))
-#endif
 
 typedef GoogMap<
     Hash256,
@@ -49,26 +47,20 @@ static uint256_t gNullHash;
 
 static double getMem() {
 
-    #if defined(linux)
-        char statFileName[256];
-        sprintf(
-            statFileName,
-            "/proc/%d/statm",
-            (int)getpid()
-        );
+    char statFileName[256];
+    sprintf(
+        statFileName,
+        "/proc/%d/statm",
+        (int)getpid()
+    );
 
-        uint64_t mem = 0;
-        FILE *f = fopen(statFileName, "r");
-            if(1!=fscanf(f, "%" PRIu64, &mem)) {
-                warning("coudln't read process size");
-            }
-        fclose(f);
-        return (1e-9f*mem)*getpagesize();
-    #elif defined(_WIN64)
-        return 0;   // TODO
-    #else
-        return 0;   // TODO
-    #endif
+    uint64_t mem = 0;
+    FILE *f = fopen(statFileName, "r");
+        if(1!=fscanf(f, "%" PRIu64, &mem)) {
+            warning("coudln't read process size");
+        }
+    fclose(f);
+    return (1e-9f*mem)*getpagesize();
 }
 
 #if defined BITCOIN
@@ -888,15 +880,6 @@ static void initHashtables() {
     }
 #endif
 
-#if defined(_WIN64)
-    static char *canonicalize_file_name(
-        const char *fileName
-    ) {
-        return strdup(fileName);
-    }
-#endif
-
-
 static std::string getNormalizedDirName(
     const std::string &dirName
 ) {
@@ -978,15 +961,13 @@ static void findBlockFiles() {
         }
 
         auto fileSize = statBuf.st_size;
-	#if !defined(_WIN64)
-	    auto r1 = posix_fadvise(fd, 0, fileSize, POSIX_FADV_NOREUSE);
-	    if(r1<0) {
-		warning(
-		    "failed to posix_fadvise on block chain file %s",
-		    fileName.c_str()
-		);
-	    }
-	#endif
+        auto r1 = posix_fadvise(fd, 0, fileSize, POSIX_FADV_NOREUSE);
+        if(r1<0) {
+            warning(
+                "failed to posix_fadvise on block chain file %s",
+                fileName.c_str()
+            );
+        }
 
         BlockFile blockFile;
         blockFile.fd = fd;

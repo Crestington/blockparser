@@ -1012,6 +1012,10 @@ const char *getInterestingAddr() {
     #elif defined(PAYCON)
 
         "PShpEEfcy8UrBPWoefsNnq8oz6bX7dNxnP"
+		
+    #elif defined(MOTACOIN)
+
+        "PShpEEfcy8UrBPWoefsNnq8oz6bX7dNxnP"
 
     #elif defined(JUMBUCKS)
 
@@ -1051,7 +1055,7 @@ const char *getInterestingAddr() {
 
 #endif
 
-#if defined(PAYCON)
+#if defined(PAYCON)|| defined(MOTACOIN)
 
     #include <h9/h13.h>
 

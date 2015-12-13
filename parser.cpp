@@ -120,7 +120,7 @@ static double getMem() {
 #if defined MOTACOIN
     static const size_t gHeaderSize = 80;
     static auto kCoinDirName = ".MotaCoin";
-    static const uint32_t gExpectedMagic = 0xDED5865F;
+    static const uint32_t gExpectedMagic = 0x5F86D5DE;
 #endif
 
 #if defined JUMBUCKS

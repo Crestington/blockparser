@@ -548,9 +548,13 @@ static int getCoinType() {
             48 + 28
         #endif
 
-        #if defined(PAYCON)|| defined(MOTACOIN)
+        #if defined(PAYCON) || defined(MOTACOIN)
             55
         #endif
+
+        #if defined(COLOSSUSCOIN2)
+            28
+        #endif		
 
         #if defined(LITECOIN)
             48
@@ -1017,6 +1021,10 @@ const char *getInterestingAddr() {
 
         "PShpEEfcy8UrBPWoefsNnq8oz6bX7dNxnP"
 
+    #elif defined(COLOSSUSCOIN2)
+
+        "CShpEEfcy8UrBPWoefsNnq8oz6bX7dNxnP"
+
     #elif defined(JUMBUCKS)
 
         "JhbrvAmM7kNpwA6wD5KoAsbtikLWWMNPcM"
@@ -1055,7 +1063,7 @@ const char *getInterestingAddr() {
 
 #endif
 
-#if defined(PAYCON)|| defined(MOTACOIN)
+#if defined(PAYCON) || defined(MOTACOIN) || defined(COLOSSUSCOIN2)
 
     #include <h9/h13.h>
 

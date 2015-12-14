@@ -123,6 +123,12 @@ static double getMem() {
     static const uint32_t gExpectedMagic = 0x5F86D5DE;
 #endif
 
+#if defined COLOSSUSCOIN2
+    static const size_t gHeaderSize = 80;
+    static auto kCoinDirName = ".ColossusCoin2";
+    static const uint32_t gExpectedMagic = 0xa923a670;
+#endif
+
 #if defined JUMBUCKS
     static const size_t gHeaderSize = 80;
     static auto kCoinDirName = ".coinmarketscoin";
@@ -403,7 +409,7 @@ static void parseTX(
             SKIP(uint32_t, nVersion, p);
         #endif
 
-        #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON)|| defined(MOTACOIN)
+        #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON) || defined(MOTACOIN) || defined(COLOSSUSCOIN2)
             SKIP(uint32_t, nTime, p);
         #endif
 
@@ -472,7 +478,7 @@ static bool parseBlock(
                 }
             endTXs(p);
 
-            #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON)|| defined(MOTACOIN)
+            #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON) || defined(MOTACOIN) || defined(COLOSSUSCOIN2)
                 LOAD_VARINT(vchBlockSigSize, p);
                 p += vchBlockSigSize;
             #endif
@@ -722,7 +728,7 @@ static void getBlockHeader(
 
     #if defined(DARKCOIN)
         h9(hash, p, gHeaderSize);
-    #elif defined(PAYCON)|| defined(MOTACOIN)
+    #elif defined(PAYCON) || defined(MOTACOIN) || defined(COLOSSUSCOIN2)
         h13(hash, p, gHeaderSize);
     #elif defined(CLAM)
         auto pBis = p;
